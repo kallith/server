@@ -123,10 +123,13 @@ struct boss_azuregosAI : ScriptedAI
             for (ThreatList::const_iterator i = tList.begin(); i != tList.end(); ++i)
             {
                 Unit* pUnit = m_creature->GetMap()->GetUnit((*i)->getUnitGuid());
-                if (pUnit && pUnit->GetTypeId() == TYPEID_PLAYER && pUnit->GetDistance(m_creature) < 45.0f)
+                if (pUnit && pUnit->GetTypeId() == TYPEID_PLAYER)
                 {
                     m_creature->getThreatManager().modifyThreatPercent(pUnit, -100);
-                    DoTeleportPlayer(pUnit, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5, pUnit->GetOrientation());
+                    if (pUnit->GetDistance(m_creature) < 45.0f)
+                    {
+                        DoTeleportPlayer(pUnit, m_creature->GetPositionX(), m_creature->GetPositionY(), m_creature->GetPositionZ() + 5, pUnit->GetOrientation());
+                    }
                 }
             }
 
